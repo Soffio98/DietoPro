@@ -1,5 +1,5 @@
 {
-  "name": "diet-app-database",
+  "name": "dietapp-db",
   "version": "1.0.0",
   "description": "Applicazione con database MySQL dinamico",
   "main": "server.js",
