@@ -1,0 +1,97 @@
+<head></head>
+<body>
+    
+
+<div id="pasti-management" class="hidden">
+    <div class="section">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>🍽️ Gestione Pasti Pre-fatti</h2>
+            <button class="btn btn-primary" onclick="openNewMealModal()">
+                ➕ Crea Nuovo Pasto
+            </button>
+        </div>
+
+        <!-- Lista Pasti Esistenti -->
+        <div id="pasti-list" class="pasti-grid">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Caricamento pasti...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Modal Creazione/Modifica Pasto -->
+    <div id="meal-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="meal-modal-title">🍽️ Crea Nuovo Pasto</h3>
+                <button class="modal-close" onclick="closeMealModal()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Info Base Pasto -->
+                <div class="meal-info-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="meal-name">Nome del Pasto *</label>
+                            <input type="text" id="meal-name" class="form-control" 
+                                placeholder="es. Colazione Proteica, Pranzo Mediterraneo...">
+                        </div>
+                        <div class="form-group">
+                            <label for="meal-category">Categoria</label>
+                            <select id="meal-category" class="form-control">
+                                <option value="colazione">Colazione</option>
+                                <option value="spuntino">Spuntino</option>
+                                <option value="pranzo">Pranzo</option>
+                                <option value="merenda">Merenda</option>
+                                <option value="cena">Cena</option>
+                                <option value="generico">Generico</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="meal-description">Descrizione</label>
+                        <textarea id="meal-description" class="form-control" rows="2" 
+                                placeholder="Descrizione opzionale del pasto..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Sezione Alimenti -->
+                <div class="meal-foods-section">
+                    <h4>📋 Composizione del Pasto</h4>
+                    
+                    <!-- Lista alimenti del pasto -->
+                    <div id="meal-foods-container" class="food-list">
+                        <p style="color: #999; text-align: center; padding: 20px; font-style: italic;">
+                            Clicca "Aggiungi Alimento" per iniziare a comporre il pasto
+                        </p>
+                    </div>
+                    
+                    <!-- Pulsante aggiungi alimento -->
+                    <button class="add-food-btn" onclick="addFoodToPresetMeal()">
+                        ➕ Aggiungi Alimento
+                    </button>
+                    
+                    <!-- Totali del pasto -->
+                    <div class="meal-totals-summary">
+                        <h4>📊 Totali del Pasto</h4>
+                        <div class="meal-totals-grid" id="preset-meal-totals">
+                            <!-- Qui verranno mostrati i totali -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeMealModal()">Annulla</button>
+                <button class="btn btn-primary" onclick="savePresetMeal()">
+                    💾 Salva Pasto
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>

@@ -1,0 +1,166 @@
+<head>
+
+</head>
+
+<body>
+    
+
+<div id="alimenti-management" class="main-content hidden">
+    <div class="section">
+        <!-- Header -->
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h2>🥗 Gestione Alimenti</h2>
+                <p class="subtitle">Cerca e modifica alimenti o aggiungine di nuovi</p>
+            </div>
+        </div>
+
+        <!-- Sezione ricerca/aggiungi -->
+        <div class="search-section">
+            <div class="search-container">
+                <h3>🔍 Cerca o Aggiungi Alimento</h3>
+                <div class="search-wrapper">
+                    <input type="text" 
+                           id="foodSearch" 
+                           class="food-search-input" 
+                           placeholder="Digita per cercare un alimento..."
+                           autocomplete="off">
+                    <div id="searchResults" class="search-results hidden"></div>
+                </div>
+                <button class="btn btn-primary" onclick="showNewFoodForm()">
+                    ➕ Crea Nuovo Alimento
+                </button>
+            </div>
+        </div>
+
+        <!-- Form nuovo alimento (nascosto) -->
+        <div id="newFoodForm" class="food-form hidden">
+            <h3>📝 Nuovo Alimento</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nome *</label>
+                    <input type="text" id="new-nome" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Kcal</label>
+                    <input type="number" id="new-kcal" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Proteine (g)</label>
+                    <input type="number" id="new-proteine" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Carboidrati (g)</label>
+                    <input type="number" id="new-carboidrati" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Grassi (g)</label>
+                    <input type="number" id="new-grassi" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Sodio (mg)</label>
+                    <input type="number" id="new-sodio" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Potassio (mg)</label>
+                    <input type="number" id="new-potassio" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Calcio (mg)</label>
+                    <input type="number" id="new-calcio" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Ferro (mg)</label>
+                    <input type="number" id="new-ferro" class="form-input" step="0.01" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Vitamina D (μg)</label>
+                    <input type="number" id="new-vitamina_d" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Vitamina A (μg)</label>
+                    <input type="number" id="new-vitamina_a" class="form-input" step="1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Vitamina C (mg)</label>
+                    <input type="number" id="new-vitamina_c" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Vitamina B1 (mg)</label>
+                    <input type="number" id="new-vitamina_b1" class="form-input" step="0.001" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Vitamina B12 (μg)</label>
+                    <input type="number" id="new-vitamina_b12" class="form-input" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Folati (μg)</label>
+                    <input type="number" id="new-folati" class="form-input" step="1" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Sale (gr)</label>
+                    <input type="number" id="new-sale" class="form-input" step="1" value="0">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-success" onclick="saveNewFood()">💾 Salva Nuovo Alimento</button>
+                <button class="btn btn-secondary" onclick="hideNewFoodForm()">Annulla</button>
+            </div>
+        </div>
+
+        <!-- Alimenti caricati per modifica -->
+        <div id="loadedFoods" class="loaded-foods">
+            <h3 id="loadedTitle" class="hidden">📝 Alimenti in Modifica</h3>
+            <div id="foodsList" class="foods-list">
+                <!-- Gli alimenti caricati appariranno qui -->
+            </div>
+            <div id="saveAllBtn" class="save-all hidden">
+                <button class="btn btn-success btn-large" onclick="saveAllChanges()">
+                    💾 Salva Tutte le Modifiche
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast per messaggi -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Template per risultato di ricerca -->
+    <template id="searchResultTemplate">
+        <div class="search-result-item" data-food-id="">
+            <div class="food-name"></div>
+            <div class="food-info">
+                <span class="food-calories"></span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template per card alimento -->
+    <template id="foodCardTemplate">
+        <div class="food-card" data-food-id="">
+            <div class="food-card-header">
+                <h4 class="food-title"></h4>
+                <button class="btn btn-danger btn-small remove-food-btn">
+                    ❌ Chiudi
+                </button>
+            </div>
+            <div class="food-card-grid">
+                <!-- I campi verranno generati dinamicamente -->
+            </div>
+            <div class="food-actions">
+                <button class="btn btn-primary btn-small save-food-btn">
+                    💾 Salva Modifiche
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template per campo form -->
+    <template id="formFieldTemplate">
+        <div class="form-group">
+            <label></label>
+            <input type="number" class="form-input" data-field="">
+        </div>
+    </template>
+</div>
+</body>

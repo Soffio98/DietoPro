@@ -1,0 +1,66 @@
+
+<head>
+
+</head>
+<body>
+
+
+<div id="new-client" class="main-content hidden">
+    <div class="section">
+        <h2>➕ Nuovo Cliente</h2>
+        <form id="clientForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nome">Nome *</label>
+                    <input type="text" id="nome" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="cognome">Cognome *</label>
+                    <input type="text" id="cognome" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="peso">Peso (kg) *</label>
+                    <input type="number" id="peso" class="form-control" step="0.1" min="30" max="300" required>
+                </div>
+                <div class="form-group">
+                    <label for="altezza">Altezza (cm) *</label>
+                    <input type="number" id="altezza" class="form-control" min="100" max="250" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="data_nascita">Data di Nascita</label>
+                    <input type="date" id="data_nascita" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" id="telefono" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="note_generali">Note Generali</label>
+                <textarea id="note_generali" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" class="btn btn-primary btn-large">
+                    💾 Salva Cliente
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="showHomepage()">
+                    ❌ Annulla
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>

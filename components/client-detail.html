@@ -1,0 +1,319 @@
+<head></head>
+
+<body>
+    
+
+<div id="client-detail" class="main-content hidden">
+    <div class="section">
+        <h2 id="client-detail-title">👤 Dettaglio Cliente</h2>
+        
+        <!-- Layout a 2 colonne: Info+Peso+Diete | Anamnesi -->
+        <div class="client-detail-grid">
+
+            
+            
+            <!-- COLONNA SINISTRA: Info Cliente + Peso + Diete -->
+            <div class="left-column">
+                <!-- Info Personali -->
+                <div id="client-info-detail" ></div>
+
+                <!-- Sezione Plicometria -->
+                    <div class="section" style="margin-top: 20px; border-left: 5px solid #667eea;">
+                        <h3>📏 Plicometria</h3>
+
+                        
+                        <div id="plicometria-display" class="plico-tab">
+                            <div id="ultima-plicometria">
+                                <!-- Verrà popolato con l'ultima misurazione -->
+                                <p style="text-align: center; color: #999;">Nessuna misurazione registrata</p>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px;">
+                                <button class="btn btn-primary" onclick="showPlicometriaForm()">
+                                    ➕ Nuova Misurazione
+                                </button>
+                                <button class="btn btn-secondary" onclick="showPlicometriaHistory()">
+                                    📊 Storico Misurazioni
+                                </button>
+                                <button class="btn btn-tertiary" onclick="showProgressModal()">
+                                📊 Progressi
+                                </button>
+                            </div>
+                        </div>
+    
+    <!-- Form Plicometria (nascosto di default) -->
+    <div id="plicometria-form" class="hidden" style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h4 style="margin: 0;">Nuova Misurazione Plicometrica</h4>
+            <button type="button" class="btn btn-secondary btn-small" onclick="hidePlicometriaForm()">✕ Chiudi</button>
+        </div>
+        
+        <form id="formPlicometria" onsubmit="savePlicometria(event)">
+            <!-- Data -->
+            <div style="margin-bottom: 20px;">
+                <label for="plico-data" style="display: block; font-weight: 600; margin-bottom: 8px;">
+                    Data Misurazione
+                </label>
+                <input type="date" id="plico-data" class="form-control" required style="max-width: 200px;">
+            </div>
+            
+            <!-- Grid Pliche -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                <!-- Tricipite -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-tricipite" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">💪</span>
+                        Tricipite (mm)
+                    </label>
+                    <input type="number" id="plico-tricipite" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Addome -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-addome" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">🔲</span>
+                        Addome (mm)
+                    </label>
+                    <input type="number" id="plico-addome" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Soprailiaca -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-soprailiaca" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">📐</span>
+                        Soprailiaca (mm)
+                    </label>
+                    <input type="number" id="plico-soprailiaca" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Sottoscapolare -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-sottoscapolare" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">🔻</span>
+                        Sottoscapolare (mm)
+                    </label>
+                    <input type="number" id="plico-sottoscapolare" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Ascellare -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-ascellare" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">📍</span>
+                        Ascellare (mm)
+                    </label>
+                    <input type="number" id="plico-ascellare" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Pettorale -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-pettorale" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">🎯</span>
+                        Pettorale (mm)
+                    </label>
+                    <input type="number" id="plico-pettorale" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Coscia -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 2px solid #e9ecef;">
+                    <label for="plico-coscia" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">🦵</span>
+                        Coscia (mm)
+                    </label>
+                    <input type="number" id="plico-coscia" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+                
+                <!-- Peso -->
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; border: 2px solid #c3e6c3;">
+                    <label for="plico-peso" style="display: flex; align-items: center; font-weight: 600; margin-bottom: 10px;">
+                        <span style="font-size: 1.2em; margin-right: 8px;">⚖️</span>
+                        Peso (kg)
+                    </label>
+                    <input type="number" id="plico-peso" class="form-control" step="0.1" min="0" placeholder="0.0">
+                </div>
+            </div>
+            
+            <!-- Note -->
+            <div style="margin-bottom: 20px;">
+                <label for="plico-note" style="display: block; font-weight: 600; margin-bottom: 8px;">
+                    Note (opzionale)
+                </label>
+                <textarea id="plico-note" class="form-control" rows="3" placeholder="Eventuali annotazioni..."></textarea>
+            </div>
+            
+            <!-- Pulsanti -->
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button type="submit" class="btn btn-primary">
+                    💾 Salva Misurazione
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="hidePlicometriaForm()">
+                    Annulla
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+                
+                
+                
+                <!-- Peso Attuale EDITABILE -->
+                <div class="weight-section">
+                    <h3>⚖️ Peso e BMI Attuale</h3>
+                    
+                    <!-- Display Normale -->
+                    <div id="weight-display-mode">
+                        <div class="weight-grid">
+                            <div class="weight-item">
+                                <div class="weight-value" id="peso-attuale">--</div>
+                                <div class="weight-unit">kg</div>
+                                <div class="weight-label">Peso</div>
+                            </div>
+                            <div class="weight-item">
+                                <div class="weight-value bmi-value" id="bmi-attuale-numero">--</div>
+                                <div class="weight-unit">BMI</div>
+                                <div class="weight-label">Indice</div>
+                            </div>
+                            <div class="weight-item">
+                                <span class="bmi-badge" id="bmi-categoria">--</span>
+                                <div class="weight-label">Categoria</div>
+                            </div>
+                        </div>
+                        
+                        <div class="weight-actions">
+                            <button class="btn btn-primary" onclick="toggleWeightEditMode()">
+                                ✏️ Modifica Peso
+                            </button>
+
+                        </div>
+                    </div>
+                    
+                    <!-- Modalità Modifica -->
+                    <div id="weight-edit-mode" class="hidden">
+                        <div class="weight-edit-container">
+                            <h4>Aggiorna Peso Attuale</h4>
+                            
+                            <div class="weight-form">
+                                <div class="form-group">
+                                    <label for="new-weight-input">Nuovo Peso (kg)</label>
+                                    <input type="number" id="new-weight-input" class="form-control" 
+                                           step="0.1" min="30" max="300" placeholder="75.5">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="weight-update-note">Nota (opzionale)</label>
+                                    <input type="text" id="weight-update-note" class="form-control" 
+                                           placeholder="es. Pesata mattutina">
+                                </div>
+                                
+                                <div class="weight-edit-actions">
+                                    <button class="btn btn-primary" onclick="saveWeightUpdate()">
+                                        💾 Salva Peso
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="cancelWeightEdit()">
+                                        ❌ Annulla
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Anteprima BMI -->
+                            <div id="bmi-preview" class="bmi-preview hidden">
+                                <small>Anteprima BMI: </small>
+                                <span id="bmi-preview-value">--</span>
+                                <span id="bmi-preview-category" class="bmi-badge">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gestione Diete -->
+                <div class="diet-section">
+                    <div class="diet-header">
+                        <h3>🍽️ Gestione Diete</h3>
+                        <button class="btn btn-primary" onclick="toggleNewDietForm()">
+                            ➕ Nuova Dieta
+                        </button>
+                    </div>
+                    
+                    <!-- Form Nuova Dieta -->
+                    <div id="new-diet-form" class="new-diet-form hidden-section">
+                        <h4>Crea Nuova Dieta</h4>
+                        <form id="dietForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="diet-titolo">Titolo Dieta *</label>
+                                    <input type="text" id="diet-titolo" class="form-control" required 
+                                           placeholder="es. Dieta Dimagrimento 2025">
+                                </div>
+                                <div class="form-group">
+                                    <label for="diet-peso-iniziale">Peso Iniziale (kg) *</label>
+                                    <input type="number" id="diet-peso-iniziale" class="form-control" 
+                                           step="0.1" min="30" max="300" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diet-peso-obiettivo">Peso Obiettivo (kg)</label>
+                                    <input type="number" id="diet-peso-obiettivo" class="form-control" 
+                                           step="0.1" min="30" max="300">
+                                </div>
+                            </div>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="diet-data-inizio">Data Inizio *</label>
+                                    <input type="date" id="diet-data-inizio" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="diet-data-fine">Data Fine (opzionale)</label>
+                                    <input type="date" id="diet-data-fine" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="diet-durata">Durata (mesi)</label>
+                                    <input type="number" id="diet-durata" class="form-control" 
+                                           min="1" max="24" value="3">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="diet-descrizione">Descrizione</label>
+                                <textarea id="diet-descrizione" class="form-control" rows="2" 
+                                          placeholder="Obiettivo e note generali della dieta"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="diet-note">Note Aggiuntive</label>
+                                <textarea id="diet-note" class="form-control" rows="2" 
+                                          placeholder="Note specifiche, restrizioni, etc."></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">💾 Crea Dieta</button>
+                                <button type="button" class="btn btn-secondary" onclick="toggleNewDietForm()">❌ Annulla</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Lista Diete -->
+                    <div id="diets-list">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Caricamento diete...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLONNA DESTRA: Anamnesi -->
+            <div id="client-anamnesi" class="anamnesi-section">
+                <h3>📋 Anamnesi</h3>
+                <button class="btn btn-primary" onclick="addNewRiquadro()">
+                    ➕ Aggiungi Riquadro
+                </button>
+                <div id="anamnesi-riquadri"></div>
+                <div class="anamnesi-actions">
+                    <button class="btn btn-primary" onclick="saveAnamnesi()">
+                        💾 Salva Anamnesi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

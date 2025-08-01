@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥗 Diet Manager Pro</title>
+    
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/alternatives-modal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🥗 Diet Manager Pro</h1>
+            <p>Gestione professionale di diete personalizzate</p>
+        </div>
+
+        <!-- Back Button -->
+        <button class="back-btn hidden" onclick="showHomepage()" title="Torna alla homepage">
+            ← 
+        </button>
+
+        <!-- Homepage -->
+        <div id="homepage" class="main-content">
+            <div class="section">
+                <h2>🚀 Azioni Principali</h2>
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary btn-large" onclick="showNewClientForm()">
+                            ➕ Crea Nuovo Cliente
+                        </button>
+                        <button class="btn btn-secondary btn-large" onclick="loadClients()">
+                            📋 Gestisci Clienti Esistenti
+                        </button>
+                        <button class="btn btn-tertiary btn-large" onclick="showAlimentiManagement()">
+                            <div class="icon">🥗</div>
+                            <h3>Gestisci Alimenti</h3>
+                        </button>
+                        <button class="btn btn-quartary btn-large" onclick="showPastiManagement()">
+                            <div class="icon">🍽️</div>
+                            <h3>Crea Pasti</h3>
+                        </button>
+                    </div>
+            </div>
+
+            <div class="section">
+                <h2>👥 Clienti Recenti</h2>
+                <div id="recent-clients">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Caricamento clienti...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sezioni dinamiche -->
+        <div id="new-client-section"></div>
+        <div id="client-list-section"></div>
+        <div id="client-detail-section"></div>
+        <div id="planning-modal-section"></div>
+        <div id="alimenti-management-section"></div>
+        <div id="pasti-management-section"></div>
+    </div>
+
+    <!-- JavaScript Files
+<script src="js/planning.js"></script>
+    -->
+
+<!-- JavaScript Files -->
+<script src="js/utils.js"></script>
+<script src="js/alimenti.js"></script>  <!-- SPOSTARE QUI, PRIMA di loadComponents -->
+<script src="js/pasti.js"></script>
+
+
+
+<script src="js/planning/state.js"></script>
+<script src="js/planning/config.js"></script>
+<script src="js/planning/modal.js"></script>
+<script src="js/planning/cacheAndDb.js"></script>
+<script src="js/planning/food.js"></script> 
+
+<script src="js/main.js"></script>
+
+<script src="js/anamnesis.js"></script>
+<script src="js/clients.js"></script>
+<script src="js/diets.js"></script>
+<script src="js/exportpdf.js"></script>
+<script src="js/navigation.js"></script>
+<!-- <script src="js/pianificazione-save.js"></script>-->
+<script src="js/plicometria.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/weights.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    
+
+<script>
+    // Carica i componenti HTML
+    async function loadComponents() {
+        try {
+            const components = [
+                { id: 'new-client-section', file: 'components/new-client-form.html' },
+                { id: 'client-list-section', file: 'components/client-list.html' },
+                { id: 'client-detail-section', file: 'components/client-detail.html' },
+                { id: 'planning-modal-section', file: 'components/planning-modal.html' },
+                { id: 'alimenti-management-section', file: 'components/alimenti.html' },
+                { id: 'pasti-management-section', file: 'components/pasti.html' }
+            ];
+            
+            await Promise.all(components.map(async (component) => {
+                const response = await fetch(component.file);
+                const html = await response.text();
+                document.getElementById(component.id).innerHTML = html;
+                console.log(component.id)
+            }));
+
+            console.log('✅ Tutti i componenti caricati');
+            
+            // IMPORTANTE: Inizializza le funzioni DOPO il caricamento dei componenti
+            if (typeof initializePastiFunctions === 'function') {
+                initializePastiFunctions();
+            }
+            
+        } catch (error) {
+            console.error('❌ Errore nel caricamento dei componenti:', error);
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadComponents);
+</script>
+</body>
+</html>
